@@ -9,7 +9,6 @@ class Book {
     private int isbnNumber;
     private boolean isBorrowed;
 
-    private int count;
 
     public Book(Author author, String title, LocalDate dateOfPublication, int isbnNumber) {
         this.author = author;

@@ -1,12 +1,9 @@
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 enum Library {
 
     INSTANCE;
-    private ArrayList<Book> books;
+    private ArrayList<Book> books = new ArrayList<>();
 
     Library(){
         this.books = new ArrayList<>();
@@ -23,6 +20,25 @@ enum Library {
                 '}';
     }
 
+
+    public void printBooksWithNumberOfCopies(){
+        HashMap<String, Integer> books1 = new HashMap<>();
+
+        for(Book book : books){
+            if(book.isBorrowed() == false){
+                String value = book.getTitle();
+                Integer count = books1.get(value);
+                if(count == null){
+                    books1.put(value, 1);
+                }else
+                    books1.put(value, count+1);
+            }
+        }
+
+        for(Map.Entry<String, Integer> entry : books1.entrySet()){
+            System.out.println("Title: " + entry.getKey() + " number of copies available: " +entry.getValue());
+        }
+    }
     public void printBooks(){
         for(int i = 0; i<books.size(); i++){
             System.out.println(this.books.get(i).getAuthor() + " " +this.books.get(i).getTitle() + " " + this.books.get(i).getDateOfPublication() + " " + this.books.get(i).getIsbnNumber() + " " + this.books.get(i).isBorrowed());
@@ -71,13 +87,13 @@ enum Library {
     }
 
     public boolean removeBook(int isbn){
-       int position = findBook(isbn);
+        int position = findBook(isbn);
         System.out.println(position);
-       if(position < 0){
-           System.out.println("ISBN number doesn't match any of the books");
-           return false;
-       }
-       this.books.remove(position);
+        if(position < 0){
+            System.out.println("ISBN number doesn't match any of the books");
+            return false;
+        }
+        this.books.remove(position);
         System.out.println("Book has been successfully removed");
         return true;
     }
@@ -91,17 +107,6 @@ enum Library {
         this.books.set(position, newBook);
         return true;
     }
-
-    public void findOnlyAvailableBook(String title){
-        for(int i = 0; i<this.books.size(); i++){
-            if(this.books.get(i).getTitle().equals(title)){
-                if(this.books.get(i).isBorrowed() == false){
-                    System.out.println(this.books.get(i).getAuthor() + " " +this.books.get(i).getTitle() + " " + this.books.get(i).getDateOfPublication() + " " + this.books.get(i).getIsbnNumber());
-                }
-            }
-        }
-    }
-
 
 
 

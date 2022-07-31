@@ -1,6 +1,8 @@
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -49,7 +51,7 @@ public class Main {
                     end = true;
                     break;
                 case 1:
-                    checkAvailableBooks();
+                    library.printBooksWithNumberOfCopies();
                     break;
                 case 2:
 
@@ -137,8 +139,23 @@ public class Main {
         Author author = Author.createAuthor(firstName, lastName);
         Book book = Book.addBook(author, title, LocalDate.of(year, month, day), isbnNumber);
         library.getBooks().add(book);
+
     }
 
+//    public static void printBooksWithCopies(){
+//        for(Book book : library.getBooks()){
+//            String value = book.getTitle();
+//            Integer count = books1.get(value);
+//            if(count == null){
+//                books1.put(value, 1);
+//            }else
+//                books1.put(value, count+1);
+//        }
+//
+//        for(Map.Entry<String, Integer> entry : books1.entrySet()){
+//            System.out.println("Title: " + entry.getKey() + " number of copies available: " +entry.getValue());
+//        }
+//    }
     public static void removeBook(){
         System.out.println("Please enter the title to see all the copies available");
         String title = scanner.next();
@@ -179,9 +196,6 @@ public class Main {
             }
         }
         System.out.println(count);
-
-
-
     }
 
 
