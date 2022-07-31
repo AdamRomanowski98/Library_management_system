@@ -1,6 +1,8 @@
+package librarySystem;
+
 import java.util.Scanner;
 
-public class Admin extends User{
+public class Admin extends User {
 
     Scanner scanner = new Scanner(System.in);
     private String adminPassword;
