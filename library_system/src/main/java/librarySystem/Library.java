@@ -43,6 +43,26 @@ enum Library {
             System.out.println("Title: " + entry.getKey() + " number of copies available: " +entry.getValue());
         }
     }
+
+    public HashMap<String, Integer> printBooksWithCopies(String title){
+        HashMap<String, Integer> books1 = new HashMap<>();
+        for(Book book : books){
+            if(book.isBorrowed() == false && book.getTitle().equals(title)){
+                String value = book.getTitle();
+                Integer count = books1.get(value);
+                if(count == null){
+                    books1.put(value, 1);
+                }else
+                    books1.put(value, count+1);
+            }
+
+        }
+        for(Map.Entry<String, Integer> entry : books1.entrySet()){
+            System.out.println("Title: " + entry.getKey() + " number of copies available: " +entry.getValue());
+        }
+        return books1;
+    }
+
     public void printBooks(){
         for(int i = 0; i<books.size(); i++){
             System.out.println(this.books.get(i).getAuthor() + " " +this.books.get(i).getTitle() + " " + this.books.get(i).getDateOfPublication() + " " + this.books.get(i).getIsbnNumber() + " " + this.books.get(i).isBorrowed());
@@ -69,6 +89,10 @@ enum Library {
             }
         }
         return -1;
+    }
+
+    public void setBook(Book book){
+        book.setBorrowed(true);
     }
 
     public Book findBookObject(String title){

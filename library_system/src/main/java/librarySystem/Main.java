@@ -1,6 +1,7 @@
 package librarySystem;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -52,7 +53,7 @@ public class Main {
                     library.printBooksWithNumberOfCopies();
                     break;
                 case 2:
-
+                    borrowBook();
                     break;
                 case 3:
 
@@ -100,9 +101,9 @@ public class Main {
         System.out.println("Press \n" +
                 "0 - to shutdown\n" +
                 "1 - to Check available books\n" +
-                "2 - to Check borrowed books\n" +
-                "3 - to borrow a book\n" +
-                "5 - to ");
+                "2 - to borrow a book\n" +
+                "3 - to....." +
+                "5 - to...... ");
     }
 
     public static void printOptionsAdmin(){
@@ -140,20 +141,6 @@ public class Main {
 
     }
 
-//    public static void printBooksWithCopies(){
-//        for(Book book : library.getBooks()){
-//            String value = book.getTitle();
-//            Integer count = books1.get(value);
-//            if(count == null){
-//                books1.put(value, 1);
-//            }else
-//                books1.put(value, count+1);
-//        }
-//
-//        for(Map.Entry<String, Integer> entry : books1.entrySet()){
-//            System.out.println("Title: " + entry.getKey() + " number of copies available: " +entry.getValue());
-//        }
-//    }
     public static void removeBook(){
         System.out.println("Please enter the title to see all the copies available");
         String title = scanner.next();
@@ -181,20 +168,23 @@ public class Main {
         library.updateBook(book, newBook);
     }
 
-    public static void checkAvailableBooks(){
-//        System.out.println("Please enter the title of the book");
-//        String title = scanner.nextLine();
-//        library.findOnlyAvailableBook(title);
-        String title = "book";
-        Book book = library.findBookObject(title);
-        int count = 0;
-        for(int i = 0; i< library.getBooks().size(); i++){
-            if(book.getTitle().equals(title)){
-                count++;
+    public static void borrowBook(){
+        System.out.println("Please enter the title to display available books");
+        String tit = scanner.next();
+        library.printBooksWithCopies(tit);
+        System.out.println("Press one to reserve this book");
+        int choice = scanner.nextInt();
+        if(choice == 1){
+            for(int i = 0; i<library.getBooks().size(); i++){
+                if(library.getBooks().get(i).getTitle().equals(title) && library.getBooks().get(i).isBorrowed() == false){
+                    library.getBooks().get(i).setBorrowed(true);
+                    System.out.println("Book has been reserved successfully");
+                    break;
+                }
             }
         }
-        System.out.println(count);
     }
+
 
 
 }
