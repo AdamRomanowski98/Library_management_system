@@ -2,13 +2,17 @@ package librarySystem;
 
 import java.util.Scanner;
 
-public class Admin extends User {
+public class Admin {
 
     Scanner scanner = new Scanner(System.in);
     private String adminPassword;
 
+    private String firstName;
+    private String lastName;
+
     public Admin(String firstName, String lastName) {
-        super(firstName, lastName);
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.adminPassword = "Library123";
     }
 

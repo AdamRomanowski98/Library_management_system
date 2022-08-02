@@ -7,6 +7,10 @@ import java.util.Scanner;
 public class Main {
     private static Library library = Library.INSTANCE;
     private static Admin admin = new Admin("Adam", "Romanowski");
+    private static Login login = new Login();
+    private static User currentlyLoggedUser;
+    private static PhoneNumber phone = new PhoneNumber();
+    private static IsbnNumber isbnNum = new IsbnNumber();
     public static Scanner scanner = new Scanner(System.in);
     public static boolean end = false;
     public static String firstName;
@@ -18,36 +22,43 @@ public class Main {
     public static int isbnNumber;
 
     public static void main(String[] args) {
-
-//        while(!end){
-//            System.out.println("Press 1 for user panel\n"+
-//                    "Press 2 for admin panel\n"+
-//                    "Press 3 for exit");
-//            int choice = scanner.nextInt();
-//            switch (choice){
-//                case 1: userPanel();
-//                break;
-//                case 2: adminPanel();
-//                break;
-//                case 3: end = true;
-//                break;
-//                default:
-//                    System.out.println("Wrong option chosen");
-//            }
-//        }
-
-
-        adminPanel();
+        welcomePanel();
     }
 
-    public static void userPanel(){
+    public static void welcomePanel(){
+        while(!end){
+            System.out.println("Welcome to library system\n"
+            +"Please press: \n"
+            +"0 to shut down\n"
+            +"1 to Sign Up \n"
+            +"2 to Sign In \n"
+            +"3 for Admin panel");
+            int choice = scanner.nextInt();
+            switch (choice){
+                case 0:
+                    end = true;
+                    break;
+                case 1:
+                    registerAccount();
+                    break;
+                case 2:
+                    signIn();
+                    break;
+                case 3:
+                    adminPanel();
+                    break;
+            }
+        }
+    }
+
+    public static void userPanel(User user){
         while(!end){
             printOptions();
             int choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice){
                 case 0:
-                    end = true;
+                    welcomePanel();
                     break;
                 case 1:
                     library.printBooksWithNumberOfCopies();
@@ -76,7 +87,7 @@ public class Main {
                 scanner.nextLine();
                 switch (choice){
                     case 0:
-                        userPanel();
+                        userPanel(currentlyLoggedUser);
                         break;
                     case 1:
                         addBook();
@@ -131,6 +142,73 @@ public class Main {
         day = scanner.nextInt();
         System.out.println("Enter isbn number");
         isbnNumber = scanner.nextInt();
+        while (!isbnNum.getIsbn().add(isbnNumber)){
+            System.out.println("This isbn number arleady exists, try again");
+            isbnNumber = scanner.nextInt();
+        }
+
+    }
+
+
+    public static void registerAccount(){
+        System.out.println("Enter First Name");
+        String firstName = scanner.nextLine();
+        scanner.nextLine();
+        System.out.println("Enter Last Name");
+        String lastName = scanner.nextLine();
+        System.out.println("Enter login");
+        String userLogin = scanner.nextLine();
+        while (!login.getLogins().add(userLogin)){
+            System.out.println("This login arleady exists, try again");
+            userLogin = scanner.nextLine();
+        }
+        System.out.println("Enter password");
+        String password = scanner.nextLine();
+        System.out.println("Enter phoneNumber");
+        int phoneNumber = scanner.nextInt();
+        while (!phone.getPhoneNumbers().add(phoneNumber)){
+            System.out.println("This phone number arleady exists, try again");
+            phoneNumber = scanner.nextInt();
+        }
+        User user = User.createUser(firstName, lastName, userLogin,password, phoneNumber);
+        if(library.getUsers().add(user)){
+            System.out.println("Account has been created successfully");
+        }
+        welcomePanel();
+    }
+
+    public User sign(){
+        scanner.nextLine();
+        System.out.println("Please enter your login");
+        String userLogin = scanner.nextLine();
+        if(!library.findUser(userLogin)){
+            System.out.println("Wrong login - Please register your account");
+            welcomePanel();
+        }
+        System.out.println("Please enter password");
+        String password = scanner.nextLine();
+        while(!library.findUserObject(userLogin).getPassword().equals(password)){
+            System.out.println("Wrong password - Please try again");
+            password = scanner.nextLine();
+        }
+        return library.findUserObject(userLogin);
+    }
+    public static void signIn(){
+        scanner.nextLine();
+        System.out.println("Please enter your login");
+        String userLogin = scanner.nextLine();
+        if(!library.findUser(userLogin)){
+            System.out.println("Wrong login - Please register your account");
+            welcomePanel();
+        }
+        System.out.println("Please enter password");
+        String password = scanner.nextLine();
+        while(!library.findUserObject(userLogin).getPassword().equals(password)){
+            System.out.println("Wrong password - Please try again");
+            password = scanner.nextLine();
+        }
+        currentlyLoggedUser = library.findUserObject(userLogin);
+        userPanel(currentlyLoggedUser);
     }
 
     public static void addBook(){
@@ -173,7 +251,7 @@ public class Main {
         String tit = scanner.next();
         if(library.printBooksWithCopies(tit).isEmpty()){
             System.out.println("Book not available");
-            userPanel();
+            userPanel(currentlyLoggedUser);
         }
         for(Map.Entry<String, Integer> entry : library.printBooksWithCopies(tit).entrySet()){
             System.out.println("Title: " + entry.getKey() + " number of copies available: " +entry.getValue());
@@ -190,7 +268,7 @@ public class Main {
                 }
             }
         }else if(choice == 2){
-            userPanel();
+            userPanel(currentlyLoggedUser);
         }
     }
 

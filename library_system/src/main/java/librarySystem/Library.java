@@ -8,13 +8,18 @@ enum Library {
 
     INSTANCE;
     private ArrayList<Book> books = new ArrayList<>();
-
+    private ArrayList<User> users = new ArrayList<>();
     Library(){
         this.books = new ArrayList<>();
+        this.users = new ArrayList<>();
     }
 
     public ArrayList<Book> getBooks() {
         return books;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
     @Override
@@ -134,9 +139,24 @@ enum Library {
         return true;
     }
 
+    public boolean findUser(String login){
+        for(int i = 0; i<this.users.size(); i++){
+            if(this.users.get(i).getLogin().equals(login)){
+                return true;
+            }
+        }
+        return false;
+    }
 
-
-
-
+    public User findUserObject(String login){
+        for(int i = 0; i<this.users.size(); i++){
+            User user = this.users.get(i);
+            if(user.getLogin().equals(login)){
+                int position = this.users.indexOf(user);
+                return this.users.get(position);
+            }
+        }
+        return null;
+    }
 
 }
