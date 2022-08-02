@@ -171,17 +171,26 @@ public class Main {
     public static void borrowBook(){
         System.out.println("Please enter the title to display available books");
         String tit = scanner.next();
-        library.printBooksWithCopies(tit);
-        System.out.println("Press one to reserve this book");
+        if(library.printBooksWithCopies(tit).isEmpty()){
+            System.out.println("Book not available");
+            userPanel();
+        }
+        for(Map.Entry<String, Integer> entry : library.printBooksWithCopies(tit).entrySet()){
+            System.out.println("Title: " + entry.getKey() + " number of copies available: " +entry.getValue());
+        }
+        System.out.println("Press 1 to reserve this book\n"
+        +"Press 2 to cancel");
         int choice = scanner.nextInt();
         if(choice == 1){
             for(int i = 0; i<library.getBooks().size(); i++){
-                if(library.getBooks().get(i).getTitle().equals(title) && library.getBooks().get(i).isBorrowed() == false){
+                if(library.getBooks().get(i).getTitle().equals(tit) && library.getBooks().get(i).isBorrowed() == false){
                     library.getBooks().get(i).setBorrowed(true);
                     System.out.println("Book has been reserved successfully");
                     break;
                 }
             }
+        }else if(choice == 2){
+            userPanel();
         }
     }
 

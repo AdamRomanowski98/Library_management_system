@@ -57,9 +57,7 @@ enum Library {
             }
 
         }
-        for(Map.Entry<String, Integer> entry : books1.entrySet()){
-            System.out.println("Title: " + entry.getKey() + " number of copies available: " +entry.getValue());
-        }
+
         return books1;
     }
 
