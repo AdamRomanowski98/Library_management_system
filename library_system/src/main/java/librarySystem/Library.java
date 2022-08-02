@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-enum Library {
+public enum Library {
 
     INSTANCE;
     private ArrayList<Book> books = new ArrayList<>();
@@ -68,7 +68,7 @@ enum Library {
 
     public void printBooks(){
         for(int i = 0; i<books.size(); i++){
-            System.out.println(this.books.get(i).getAuthor() + " " +this.books.get(i).getTitle() + " " + this.books.get(i).getDateOfPublication() + " " + this.books.get(i).getIsbnNumber() + " " + this.books.get(i).isBorrowed());
+            System.out.println(this.books.get(i).getAuthor() + " " +this.books.get(i).getTitle() + " " + this.books.get(i).getDateOfPublication() + " " + this.books.get(i).getIsbnNumber() + " " + this.books.get(i).isBorrowed() + " " + this.books.get(i).getBorrowedTo() + " " + this.books.get(i).getBorrowedUntil());
         }
     }
 
@@ -92,10 +92,6 @@ enum Library {
             }
         }
         return -1;
-    }
-
-    public void setBook(Book book){
-        book.setBorrowed(true);
     }
 
     public Book findBookObject(String title){

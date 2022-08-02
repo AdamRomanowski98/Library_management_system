@@ -2,7 +2,7 @@ package librarySystem;
 
 import java.time.LocalDate;
 
-class Book {
+public class Book {
 
     private Author author;
     private String title;
@@ -10,6 +10,9 @@ class Book {
     private int isbnNumber;
     private boolean isBorrowed;
 
+    private User borrowedTo;
+
+    private LocalDate borrowedUntil;
 
     public Book(Author author, String title, LocalDate dateOfPublication, int isbnNumber) {
         this.author = author;
@@ -17,6 +20,8 @@ class Book {
         this.dateOfPublication = dateOfPublication;
         this.isbnNumber = isbnNumber;
         this.isBorrowed = false;
+        this.borrowedTo = null;
+        this.borrowedUntil = null;
     }
 
     public Author getAuthor() {
@@ -57,6 +62,22 @@ class Book {
 
     public void setIsbnNumber(int isbnNumber) {
         this.isbnNumber = isbnNumber;
+    }
+
+    public User getBorrowedTo() {
+        return borrowedTo;
+    }
+
+    public LocalDate getBorrowedUntil() {
+        return borrowedUntil;
+    }
+
+    public void setBorrowedTo(User borrowedTo) {
+        this.borrowedTo = borrowedTo;
+    }
+
+    public void setBorrowedUntil(LocalDate borrowedUntil) {
+        this.borrowedUntil = borrowedUntil;
     }
 
     @Override
