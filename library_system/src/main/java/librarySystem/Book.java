@@ -9,9 +9,7 @@ public class Book {
     private LocalDate dateOfPublication;
     private int isbnNumber;
     private boolean isBorrowed;
-
     private User borrowedTo;
-
     private LocalDate borrowedUntil;
 
     public Book(Author author, String title, LocalDate dateOfPublication, int isbnNumber) {

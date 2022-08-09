@@ -2,23 +2,23 @@ package librarySystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public enum Library {
+public class Library {
 
-    INSTANCE;
-    private ArrayList<Book> books = new ArrayList<>();
-    private ArrayList<User> users = new ArrayList<>();
-    Library(){
+    private List<Book> books = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
+    public Library(){
         this.books = new ArrayList<>();
         this.users = new ArrayList<>();
     }
 
-    public ArrayList<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 

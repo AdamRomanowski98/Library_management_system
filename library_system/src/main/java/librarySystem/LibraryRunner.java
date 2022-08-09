@@ -5,9 +5,11 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class LibraryRunner {
-    private static Library library = Library.INSTANCE;
+    private static Library library = new Library();
     private static Admin admin = new Admin("Adam", "Romanowski");
     private static Login login = new Login();
+
+    private static ScannerClass scan;
     private static User currentlyLoggedUser;
     private static PhoneNumber phone = new PhoneNumber();
     private static IsbnNumber isbnNum = new IsbnNumber();
@@ -29,7 +31,7 @@ public class LibraryRunner {
                     +"1 to Sign Up \n"
                     +"2 to Sign In \n"
                     +"3 for Admin panel");
-            int choice = scanner.nextInt();
+            int choice = ScannerClass.nextInt();
             switch (choice){
                 case 0:
                     end = true;
@@ -50,7 +52,7 @@ public class LibraryRunner {
     public static void userPanel(User user){
         while(!end){
             printOptions();
-            int choice = scanner.nextInt();
+            int choice = ScannerClass.nextInt();
             scanner.nextLine();
             switch (choice){
                 case 0:
@@ -76,8 +78,8 @@ public class LibraryRunner {
         admin.checkPassword();
         while(!end){
             printOptionsAdmin();
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = ScannerClass.nextInt();
+            ScannerClass.nextLine();
             switch (choice){
                 case 0:
                     welcomePanel();
@@ -120,46 +122,47 @@ public class LibraryRunner {
     }
 
     public static void printRepeatedMsg(){
-        System.out.println("Enter author's first name");
-        firstName = scanner.nextLine();
-        System.out.println("Enter author's last name");
-        lastName = scanner.nextLine();
-        System.out.println("Enter title");
-        title = scanner.nextLine();
-        System.out.println("Enter year of publication");
-        year = scanner.nextInt();
-        System.out.println("Enter month of publication");
-        month = scanner.nextInt();
-        System.out.println("Enter day of publication");
-        day = scanner.nextInt();
-        System.out.println("Enter isbn number");
-        isbnNumber = scanner.nextInt();
-        while (!isbnNum.getIsbn().add(isbnNumber)){
-            System.out.println("This isbn number arleady exists, try again");
-            isbnNumber = scanner.nextInt();
-        }
+
+            System.out.println("Enter author's first name");
+            firstName = ScannerClass.nextLine();
+            System.out.println("Enter author's last name");
+            lastName = ScannerClass.nextLine();
+            System.out.println("Enter title");
+            title = ScannerClass.nextLine();
+            System.out.println("Enter year of publication");
+            year = ScannerClass.nextInt();
+            System.out.println("Enter month of publication");
+            month = ScannerClass.nextInt();
+            System.out.println("Enter day of publication");
+            day = ScannerClass.nextInt();
+            System.out.println("Enter isbn number");
+            isbnNumber = ScannerClass.nextInt();
+            while (!isbnNum.getIsbn().add(isbnNumber)){
+                System.out.println("This isbn number arleady exists, try again");
+                isbnNumber = ScannerClass.nextInt();
+            }
 
     }
 
     public static void registerAccount(){
         System.out.println("Enter First Name");
-        String firstName = scanner.nextLine();
+        String firstName = ScannerClass.nextLine();
         scanner.nextLine();
         System.out.println("Enter Last Name");
-        String lastName = scanner.nextLine();
+        String lastName = ScannerClass.nextLine();
         System.out.println("Enter login");
-        String userLogin = scanner.nextLine();
+        String userLogin = ScannerClass.nextLine();
         while (!login.getLogins().add(userLogin)){
             System.out.println("This login arleady exists, try again");
-            userLogin = scanner.nextLine();
+            userLogin = ScannerClass.nextLine();
         }
         System.out.println("Enter password");
-        String password = scanner.nextLine();
+        String password = ScannerClass.nextLine();
         System.out.println("Enter phoneNumber");
-        int phoneNumber = scanner.nextInt();
+        int phoneNumber = ScannerClass.nextInt();
         while (!phone.getPhoneNumbers().add(phoneNumber)){
             System.out.println("This phone number arleady exists, try again");
-            phoneNumber = scanner.nextInt();
+            phoneNumber = ScannerClass.nextInt();
         }
         User user = User.createUser(firstName, lastName, userLogin,password, phoneNumber);
         if(library.getUsers().add(user)){
@@ -169,18 +172,18 @@ public class LibraryRunner {
     }
 
     public static void signIn(){
-        scanner.nextLine();
+        ScannerClass.nextLine();
         System.out.println("Please enter your login");
-        String userLogin = scanner.nextLine();
+        String userLogin = ScannerClass.nextLine();
         if(!library.findUser(userLogin)){
             System.out.println("Wrong login - Please register your account");
             welcomePanel();
         }
         System.out.println("Please enter password");
-        String password = scanner.nextLine();
+        String password = ScannerClass.nextLine();
         while(!library.findUserObject(userLogin).getPassword().equals(password)){
             System.out.println("Wrong password - Please try again");
-            password = scanner.nextLine();
+            password = ScannerClass.nextLine();
         }
         currentlyLoggedUser = library.findUserObject(userLogin);
         userPanel(currentlyLoggedUser);
@@ -196,19 +199,19 @@ public class LibraryRunner {
 
     public static void removeBook(){
         System.out.println("Please enter the title to see all the copies available");
-        String title = scanner.next();
+        String title = ScannerClass.next();
         library.findBook(title);
         System.out.println("Please enter the ISBN number of the book you want to remove from database");
-        int isbn = scanner.nextInt();
+        int isbn = ScannerClass.nextInt();
         library.removeBook(isbn);
     }
 
     public static void updateBook(){
         System.out.println("Please enter the title to see all the copies available");
-        String tit = scanner.next();
+        String tit = ScannerClass.next();
         library.findBook(tit);
         System.out.println("Please enter the ISBN number of the book you want to remove from database");
-        int isbn = scanner.nextInt();
+        int isbn = ScannerClass.nextInt();
         Book book = library.queryBook(isbn);
         if(book == null){
             System.out.println("Book not found");
@@ -223,7 +226,7 @@ public class LibraryRunner {
 
     public static void borrowBook(){
         System.out.println("Please enter the title to display available books");
-        String tit = scanner.next();
+        String tit = ScannerClass.next();
         if(library.printBooksWithCopies(tit).isEmpty()){
             System.out.println("Book not available");
             userPanel(currentlyLoggedUser);
@@ -233,13 +236,13 @@ public class LibraryRunner {
         }
         System.out.println("Press 1 to reserve this book\n"
                 +"Press 2 to cancel");
-        int choice = scanner.nextInt();
+        int choice = ScannerClass.nextInt();
         if(choice == 1){
             System.out.println("For how many days would you like to borrow this book? - Maximum 14 days");
-            int days = scanner.nextInt();
+            int days = ScannerClass.nextInt();
             while(days > 14){
                 System.out.println("Maximum time to borrow a book is 14 days. Please try again");
-                days = scanner.nextInt();
+                days = ScannerClass.nextInt();
             }
             for(int i = 0; i<library.getBooks().size(); i++){
                 if(library.getBooks().get(i).getTitle().equals(tit) && library.getBooks().get(i).isBorrowed() == false){
