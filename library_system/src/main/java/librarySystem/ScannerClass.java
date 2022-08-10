@@ -15,17 +15,18 @@ public class ScannerClass {
     }
 
     public static int nextInt(){
-        boolean isTrue = true;
-
-        while(isTrue){
-            try{
-                int number = scanner.nextInt();
-                isTrue = false;
+        boolean isTrue = false;
+        int number = 0;
+        do {
+            if (scanner.hasNextInt()) {
+                number = scanner.nextInt();
                 return number;
-            }catch (InputMismatchException e) {
-                System.out.println("Please enter a number");
+            } else {
+                scanner.next();
+                System.out.println("Enter a valid Integer value");
             }
-        }
+
+        }while (!isTrue) ;
 
         return -1;
     }

@@ -8,8 +8,6 @@ public class LibraryRunner {
     private static Library library = new Library();
     private static Admin admin = new Admin("Adam", "Romanowski");
     private static Login login = new Login();
-
-    private static ScannerClass scan;
     private static User currentlyLoggedUser;
     private static PhoneNumber phone = new PhoneNumber();
     private static IsbnNumber isbnNum = new IsbnNumber();
