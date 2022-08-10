@@ -84,7 +84,7 @@ public class Library {
         }
     }
 
-    private int findBook(int isbn){
+    public int findBook(int isbn){
         for(int i = 0; i < this.books.size(); i++){
             Book book = this.books.get(i);
             if(book.getIsbnNumber() == isbn){
